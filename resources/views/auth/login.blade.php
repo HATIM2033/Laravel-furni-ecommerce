@@ -33,7 +33,8 @@
 </nav>
 
 <!-- Start Hero & Login Section -->
-<div class="container-fluid py-5" style="min-height: 100vh; background: linear-gradient(135deg, #056412ff 0%, #0031078f 100%);">
+<!-- Start Hero & Login Section -->
+<div class="container-fluid py-5" style="min-height: 100vh; background-image: url('{{ asset('images/log.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <div class="container">
         <div class="row align-items-center" style="min-height: 80vh;">
             
@@ -79,7 +80,7 @@
 
             <!-- Right Side - Login Form -->
             <div class="col-lg-6">
-                <div class="bg-white rounded-4 shadow-lg p-5">
+                <div class="bg-white shadow-lg p-5" style="border-radius: 30px;">
                     <h2 class="fw-bold mb-2 text-center">Sign In</h2>
                     <p class="text-muted text-center mb-4">Enter your credentials to continue</p>
                     
@@ -175,7 +176,7 @@
                                        id="remember_me" 
                                        name="remember">
                                 <label class="form-check-label" for="remember_me">
-                                    <span class="checkmark"></span>
+
                                     Remember me
                                 </label>
                             </div>
@@ -192,7 +193,7 @@
                             <button type="submit" 
                                     id="loginBtn"
                                     class="btn btn-primary btn-lg py-3 fw-semibold" 
-                                    style="background: linear-gradient(135deg, #0031078f 0%, #00990dff 100%); border: none;"
+                                    style="background: linear-gradient(135deg, rgb(48, 48, 48) 0%, rgb(0, 85, 50) 100%); border: none;"
                                     onclick="showLoading(this)">
                                 <i class="fas fa-sign-in-alt me-2"></i>
                                 <span class="btn-text">Sign In</span>

@@ -33,9 +33,9 @@
 </nav>
 
 <!-- Start Hero & Register Section -->
-<div class="container-fluid p-0" style="min-height: 100vh; background: linear-gradient(135deg, #056412ff 0%, #0031078f 100%);">
-    <div class="container py-5">
-        <div class="row align-items-center min-vh-100">
+<div class="container-fluid py-5" style="min-height: 100vh; background-image: url('{{ asset('images/reg1.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="container">
+        <div class="row align-items-center" style="min-height: 80vh;">
             
             <!-- Left Side - Hero Section -->
             <div class="col-lg-6 text-white px-4 px-lg-5 d-none d-lg-block">
@@ -77,7 +77,7 @@
 
             <!-- Right Side - Register Form -->
             <div class="col-lg-6 px-4 px-lg-5">
-                <div class="bg-white rounded-4 shadow-lg p-4 p-lg-5 mx-auto" style="max-width: 500px;">
+                    <div class="bg-white shadow-lg p-5" style="border-radius: 30px;">
                     <h2 class="fw-bold mb-2 text-center">Create Your Account</h2>
                     <p class="text-muted text-center mb-4 small">Fill in your details to get started</p>
 
@@ -203,7 +203,7 @@
                             <button type="submit" 
                                     id="registerBtn"
                                     class="btn btn-lg py-2 text-white fw-semibold" 
-                                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;"
+                                    style="background: linear-gradient(135deg, rgb(48, 48, 48) 0%, rgb(0, 85, 50) 100%); border: none;"
                                     onclick="showLoading(this)">
                                 <i class="fas fa-user-plus me-2"></i>
                                 <span class="btn-text">Create Account</span>
