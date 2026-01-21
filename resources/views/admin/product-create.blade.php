@@ -101,6 +101,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <div class="form-check mb-2">
+                                    <input type="hidden" name="is_active" value="0">
                                     <input class="form-check-input" type="checkbox" id="is_active" name="is_active" value="1" checked>
                                     <label class="form-check-label" for="is_active">
                                         <strong>Active</strong>
@@ -108,7 +109,8 @@
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="is_featured" name="is_featured" value="1">
+                                        <input type="hidden" name="is_featured" value="0">
+                                        <input class="form-check-input" type="checkbox" id="is_featured" name="is_featured" value="1">
                                     <label class="form-check-label" for="is_featured">
                                         <strong>Featured</strong>
                                         <br><small class="text-muted">Show on homepage</small>

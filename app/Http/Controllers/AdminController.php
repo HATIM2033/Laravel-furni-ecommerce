@@ -165,61 +165,61 @@ class AdminController extends Controller
     /**
      * Update product.
      */
-    public function updateProduct(Request $request, Product $product)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'sku' => 'nullable|string|max:100|unique:products,sku,' . $product->id,
-            'is_active' => 'boolean',
-            'is_featured' => 'boolean',
-        ]);
-        
-        $imagePath = $product->image;
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($product->image && file_exists(public_path($product->image))) {
-                unlink(public_path($product->image));
-            }
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('products'), $imageName);
-            $imagePath = 'products/' . $imageName;
+public function updateProduct(Request $request, Product $product)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'price' => 'required|numeric|min:0',
+        'stock' => 'required|integer|min:0',
+        'category_id' => 'required|exists:categories,id',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'sku' => 'nullable|string|max:100|unique:products,sku,'.$product->id,
+        'is_active' => 'boolean',
+        'is_featured' => 'boolean',
+    ]);
+    
+    $imagePath = $product->image;
+    if ($request->hasFile('image')) {
+        // Delete old image if exists
+        if ($product->image && file_exists(public_path($product->image))) {
+            unlink(public_path($product->image));
         }
-        
-        // Generate unique slug if name changed
-        $slug = Str::slug($request->name);
-        if ($slug !== $product->slug) {
-            $originalSlug = $slug;
-            $counter = 1;
-            
-            while (Product::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
-                $slug = $originalSlug . '-' . $counter;
-                $counter++;
-            }
-        } else {
-            $slug = $product->slug;
-        }
-        
-        $product->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'category_id' => $request->category_id,
-            'image' => $imagePath,
-            'slug' => $slug,
-            'sku' => $request->sku ?? $product->sku,
-            'is_active' => $request->boolean('is_active', $product->is_active),
-            'is_featured' => $request->boolean('is_featured', $product->is_featured),
-        ]);
-        
-        return redirect()->route('admin.products')->with('success', 'Product updated successfully!');
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('products'), $imageName);
+        $imagePath = 'products/' . $imageName;
     }
+    
+    // Generate unique slug if name changed
+    $slug = Str::slug($request->name);
+    if ($slug !== $product->slug) {
+        $originalSlug = $slug;
+        $counter = 1;
+        
+        while (Product::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+    } else {
+        $slug = $product->slug;
+    }
+    
+    $product->update([
+        'name' => $request->name,
+        'description' => $request->description,
+        'price' => $request->price,
+        'stock' => $request->stock,
+        'category_id' => $request->category_id,
+        'image' => $imagePath,
+        'slug' => $slug,
+        'sku' => $request->sku ?? $product->sku,
+        'is_active' => $request->boolean('is_active'),      // ← Hadi li bدلti
+        'is_featured' => $request->boolean('is_featured'),  // ← Hadi li bدلti
+    ]);
+    
+    return redirect()->route('admin.products')->with('success', 'Product updated successfully!');
+}
     
     /**
      * Delete product.
