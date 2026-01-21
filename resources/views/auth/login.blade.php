@@ -46,7 +46,7 @@
                     
                     <div class="mt-5">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3 me-3">
+                            <div class="bg-white bg-opacity-25 rounded-3 p-3 me-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-shopping-bag fs-4"></i>
                             </div>
                             <div>
@@ -56,7 +56,7 @@
                         </div>
                         
                         <div class="d-flex align-items-center mb-3">
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3 me-3">
+                            <div class="bg-white bg-opacity-25 rounded-3 p-3 me-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-user fs-4"></i>
                             </div>
                             <div>
@@ -66,14 +66,14 @@
                         </div>
                         
                         <div class="d-flex align-items-center">
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3 me-3">
-                                <i class="fas fa-heart fs-4"></i>
+                            <div class="bg-white bg-opacity-25 rounded-3 p-3 me-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-phone-alt fs-4"></i>
                             </div>
-                            <div>
-                                <h5 class="mb-1">Save Favorites</h5>
-                                <p class="mb-0 opacity-75">Keep track of your favorite products</p>
-                            </div>
-                        </div>
+                        <div>
+        <h5 class="mb-1 fw-bold">CONTACT US</h5>
+        <p class="mb-0 opacity-75">Get in touch for any questions or support</p>
+    </div>
+</div>
                     </div>
                 </div>
             </div>

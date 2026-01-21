@@ -44,7 +44,7 @@
                 
                 <div class="mt-5">
                     <div class="d-flex align-items-start mb-4">
-                        <div class="bg-white bg-opacity-25 rounded-3 p-3 me-3">
+                        <div class="bg-white bg-opacity-25 rounded-3 p-3 me-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
                             <i class="fas fa-gift fs-5"></i>
                         </div>
                         <div>
@@ -54,7 +54,7 @@
                     </div>
                     
                     <div class="d-flex align-items-start mb-4">
-                        <div class="bg-white bg-opacity-25 rounded-3 p-3 me-3">
+                        <div class="bg-white bg-opacity-25 rounded-3 p-3 me-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
                             <i class="fas fa-bolt fs-5"></i>
                         </div>
                         <div>
@@ -64,7 +64,7 @@
                     </div>
                     
                     <div class="d-flex align-items-start">
-                        <div class="bg-white bg-opacity-25 rounded-3 p-3 me-3">
+                        <div class="bg-white bg-opacity-25 rounded-3 p-3 me-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
                             <i class="fas fa-star fs-5"></i>
                         </div>
                         <div>
