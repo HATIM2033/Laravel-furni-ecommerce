@@ -91,8 +91,6 @@
                         <a href="{{ route('orders.index') }}" class="btn btn-outline-black btn-sm">View Orders</a>
                     </div>
                     
-
-                    
                     <!-- Logout -->
                     <div class="mb-4">
                         <h4 class="h6 mb-3">Account Security</h4>

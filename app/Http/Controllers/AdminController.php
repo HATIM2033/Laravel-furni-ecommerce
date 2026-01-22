@@ -474,6 +474,56 @@ public function updateProduct(Request $request, Product $product)
     }
     
     /**
+     * Reply to a contact message.
+     */
+    public function replyToMessage(Request $request, ContactMessage $contactMessage)
+    {
+        $request->validate([
+            'reply' => 'required|string|min:10|max:2000',
+        ]);
+        
+        try {
+            // Send reply email
+            \Mail::to($contactMessage->email)->send(new \App\Mail\ContactReplyMail($contactMessage, $request->reply));
+            
+            // Mark message as replied and save reply
+            $contactMessage->markAsReplied($request->reply);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Reply sent successfully!'
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send reply. Please try again.'
+            ], 500);
+        }
+    }
+    
+    /**
+     * Delete a contact message.
+     */
+    public function deleteMessage(ContactMessage $contactMessage)
+    {
+        try {
+            $contactMessage->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Message deleted successfully!'
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete message. Please try again.'
+            ], 500);
+        }
+    }
+    
+    /**
      * Get notifications for admin.
      */
     public function getNotifications()

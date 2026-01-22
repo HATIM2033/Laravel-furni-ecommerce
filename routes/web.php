@@ -59,10 +59,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::patch('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete');
     
-    // Contact Messages routes (View Only)
+    // Contact Messages routes
     Route::get('/contact-messages', [AdminController::class, 'contactMessages'])->name('contact-messages');
     Route::get('/contact-messages/{contactMessage}/details', [AdminController::class, 'getMessageDetails'])->name('contact-messages.details');
     Route::post('/contact-messages/{contactMessage}/mark-read', [AdminController::class, 'markMessageAsRead'])->name('contact-messages.mark-read');
+    Route::post('/contact-messages/{contactMessage}/reply', [AdminController::class, 'replyToMessage'])->name('contact-messages.reply');
+    Route::delete('/contact-messages/{contactMessage}', [AdminController::class, 'deleteMessage'])->name('contact-messages.delete');
     
     // Notifications routes
     Route::get('/notifications', [AdminController::class, 'getNotifications'])->name('notifications');
@@ -103,6 +105,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // User messages routes
+    Route::get('/profile/messages', [ProfileController::class, 'messages'])->name('profile.messages');
+    Route::get('/profile/messages/{contactMessage}', [ProfileController::class, 'showMessage'])->name('profile.messages.show');
 });
 
 require __DIR__.'/auth.php';

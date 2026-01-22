@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\ContactMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,5 +67,36 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+    
+    /**
+     * Display the user's contact messages.
+     */
+    public function messages(Request $request): View
+    {
+        $messages = ContactMessage::where('email', $request->user()->email)
+            ->latest()
+            ->get();
+            
+        return view('profile.messages', [
+            'user' => $request->user(),
+            'messages' => $messages,
+        ]);
+    }
+    
+    /**
+     * Display a specific contact message.
+     */
+    public function showMessage(Request $request, ContactMessage $contactMessage): View
+    {
+        // Ensure user can only view their own messages
+        if ($contactMessage->email !== $request->user()->email) {
+            abort(403, 'Unauthorized');
+        }
+        
+        return view('profile.message-show', [
+            'user' => $request->user(),
+            'message' => $contactMessage,
+        ]);
     }
 }
