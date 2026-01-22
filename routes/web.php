@@ -94,10 +94,8 @@ Route::get('/test-email', function () {
     }
 })->name('test.email');
 
-// Dashboard route for authenticated users
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Dashboard route for authenticated users - REMOVED (conflicts with admin dashboard)
+// Admin users use /admin/dashboard, regular users should use home page
 
 // Authenticated user routes
 Route::middleware('auth')->group(function () {

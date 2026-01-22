@@ -205,4 +205,63 @@
     </div>
 </div>
 <!-- End Dashboard Section -->
+
+<!-- Profile Section (shown when clicking My Profile from sidebar) -->
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <div class="bg-white p-5 rounded shadow-sm">
+            <h3 class="mb-4">My Profile</h3>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label text-black">Full Name</label>
+                    <p class="form-control-plaintext">{{ auth()->user()->name }}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label text-black">Email Address</label>
+                    <p class="form-control-plaintext">{{ auth()->user()->email }}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label text-black">Role</label>
+                    <p class="form-control-plaintext">
+                        <span class="badge {{ auth()->user()->isAdmin() ? 'bg-danger' : 'bg-primary' }} rounded-pill">
+                            {{ ucfirst(auth()->user()->role) }}
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label text-black">Member Since</label>
+                    <p class="form-control-plaintext">{{ auth()->user()->created_at->format('M d, Y') }}</p>
+                </div>
+                @if(auth()->user()->phone)
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-black">Phone Number</label>
+                        <p class="form-control-plaintext">{{ auth()->user()->phone }}</p>
+                    </div>
+                @endif
+                @if(auth()->user()->address)
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label text-black">Address</label>
+                        <p class="form-control-plaintext">
+                            @if(is_array(auth()->user()->address))
+                                {{ auth()->user()->address['street'] ?? '' }}, 
+                                {{ auth()->user()->address['city'] ?? '' }}, 
+                                {{ auth()->user()->address['state'] ?? '' }} 
+                                {{ auth()->user()->address['zip'] ?? '' }}
+                            @else
+                                {{ auth()->user()->address }}
+                            @endif
+                        </p>
+                    </div>
+                @endif
+            </div>
+            
+            <div class="mt-4">
+                <a href="{{ route('profile.edit') }}" class="btn btn-black">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- End Dashboard Section -->
 @endsection
