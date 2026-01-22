@@ -47,7 +47,7 @@
                             </td>
                             <td>
                                 <span class="badge-admin badge bg-info">
-                                    {{ $category->products()->count() }} products
+                                    {{ $category->products_count }} products
                                 </span>
                             </td>
                             <td>
@@ -56,23 +56,24 @@
                                 </span>
                             </td>
                             <td>
-                                <div class="btn-group btn-group-sm">
+                                <div class="btn-group btn-group-sm" role="group">
                                     <a href="{{ route('admin.categories.show', $category) }}" class="btn btn-admin btn-admin-primary" title="View Category">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-admin btn-admin-success" title="Edit Category">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    @if($category->products()->count() == 0)
-                                        <form action="{{ route('admin.categories.delete', $category) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this category? This action cannot be undone.');" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-admin btn-admin-danger" title="Delete Category">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                    @if($category->products_count == 0)
+                                        <button type="button" 
+                                                class="btn btn-admin btn-admin-danger" 
+                                                title="Delete Category"
+                                                onclick="deleteCategory({{ $category->id }})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     @else
-                                        <button class="btn btn-admin btn-admin-danger" title="Cannot delete category with products" disabled>
+                                        <button class="btn btn-admin btn-admin-danger" 
+                                                title="Cannot delete category with products" 
+                                                disabled>
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     @endif
@@ -95,4 +96,42 @@
         @endif
     </div>
 </div>
+
 @endsection
+
+@push('scripts')
+<script>
+function deleteCategory(categoryId) {
+    console.log('Delete button clicked for category ID:', categoryId);
+    
+    if (confirm('Are you sure you want to delete this category? This action cannot be undone.')) {
+        // Create a form dynamically
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/admin/categories/' + categoryId;
+        form.style.display = 'none';
+        
+        // Add CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = '_token';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+        
+        // Add DELETE method
+        const methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'DELETE';
+        form.appendChild(methodInput);
+        
+        // Submit form
+        document.body.appendChild(form);
+        form.submit();
+    } else {
+        console.log('Delete cancelled for category ID:', categoryId);
+    }
+}
+</script>
+@endpush

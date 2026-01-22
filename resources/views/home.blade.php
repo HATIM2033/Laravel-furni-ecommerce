@@ -32,7 +32,7 @@
             <!-- Start Column 1 -->
             <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
                 <h2 class="mb-4 section-title">Crafted with excellent material.</h2>
-                <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. </p>
+                <p class="mb-4">We take pride in using only the finest, sustainably sourced materials to craft our furniture. From solid hardwood frames to premium, high-density fabrics, every element is selected for its superior durability and luxurious feel. Our commitment to quality means your furniture won't just look stunning today, but will withstand the test of time, maintaining its comfort and elegance for years to come. At Furni, excellence is built into every fiber and every joint.</p>
                 <p><a href="{{ route('shop.index') }}" class="btn">Explore</a></p>
             </div> 
             <!-- End Column 1 -->

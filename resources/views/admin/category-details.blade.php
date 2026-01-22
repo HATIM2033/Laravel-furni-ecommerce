@@ -100,7 +100,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         @if($product->image)
-                                            <img src="{{ asset('images/' . $product->image) }}" 
+                                            <img src="{{ asset('public/' . $product->image) }}" 
                                                  alt="{{ $product->name }}" 
                                                  class="me-2" 
                                                  style="width: 40px; height: 40px; object-fit: cover;">

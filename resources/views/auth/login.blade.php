@@ -108,7 +108,7 @@
                                    required 
                                    autofocus 
                                    autocomplete="email"
-                                   placeholder="admin@example.com"
+                                   placeholder="Enter your email"
                                    style="padding: 12px 20px; border: 2px solid #e0e0e0; transition: all 0.3s;"
                                    onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 0.2rem rgba(102, 126, 234, 0.25)'"
                                    onblur="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none'">
