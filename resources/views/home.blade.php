@@ -135,7 +135,7 @@
             <div class="col-lg-5 ps-lg-5">
                 <h2 class="section-title mb-4">We Help You Make Modern Interior Design</h2>
                 <p>Transforming your living space into a modern sanctuary has never been easier with our expert guidance. We provide a curated selection of contemporary furniture that balances sleek aesthetics with everyday comfort and functionality. Our team is dedicated to helping you find the perfect pieces that reflect your personal style while maintaining a clean, professional look. Whether you are starting from scratch or refreshing a room, we offer the inspiration and quality you need for a stunning home.</p>
-                <p><a herf="#" class="btn">Explore</a></p>
+                <p><a href="{{ route('explore') }}" class="btn">Explore</a></p>
             </div>
         </div>
     </div>
@@ -183,10 +183,10 @@
 
                                         <div class="author-info">
                                             <div class="author-pic">
-                                                <img src="{{ asset('images/person-1.png') }}" alt="Maria Jones" class="img-fluid">
+                                                <img src="{{ asset('images/profile.png') }}" alt="Maria Jones" class="img-fluid">
                                             </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3"> XYZ Inc.</span>
+                                            <h3 class="font-weight-bold">Mario Jones</h3>
+                                            <span class="position d-block mb-3"> Client</span>
                                         </div>
                                     </div>
 
@@ -206,10 +206,10 @@
 
                                         <div class="author-info">
                                             <div class="author-pic">
-                                                <img src="{{ asset('images/person-1.png') }}" alt="Maria Jones" class="img-fluid">
+                                                <img src="{{ asset('images/PROFIL2.png') }}" alt="Maria Jones" class="img-fluid">
                                             </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3">CEO.</span>
+                                            <h3 class="font-weight-bold">Sofia peters</h3>
+                                            <span class="position d-block mb-3">Client</span>
                                         </div>
                                     </div>
 
@@ -229,10 +229,10 @@
 
                                         <div class="author-info">
                                             <div class="author-pic">
-                                                <img src="{{ asset('images/person-1.png') }}" alt="Maria Jones" class="img-fluid">
+                                                <img src="{{ asset('images/PROFILE3.png') }}" alt="Maria Jones" class="img-fluid">
                                             </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3"> Co-Founder</span>
+                                            <h3 class="font-weight-bold">Dexter Morgan</h3>
+                                            <span class="position d-block mb-3"> Client</span>
                                         </div>
                                     </div>
 
@@ -258,7 +258,7 @@
                 <h2 class="section-title">Recent Blog</h2>
             </div>
             <div class="col-md-6 text-start text-md-end">
-                <a href="#" class="more">View All Posts</a>
+                <a href="{{ route('blog') }}" class="more">View All Posts</a>
             </div>
         </div>
 

@@ -108,10 +108,10 @@
 
                                         <div class="author-info">
                                             <div class="author-pic">
-                                                <img src="{{ asset('images/person-1.png') }}" alt="Maria Jones" class="img-fluid">
+                                                <img src="{{ asset('images/profile.png') }}" alt="Maria Jones" class="img-fluid">
                                             </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3"> XYZ Inc.</span>
+                                            <h3 class="font-weight-bold">Mario Jones</h3>
+                                            <span class="position d-block mb-3"> Client</span>
                                         </div>
                                     </div>
 
@@ -131,10 +131,10 @@
 
                                         <div class="author-info">
                                             <div class="author-pic">
-                                                <img src="{{ asset('images/person-1.png') }}" alt="Maria Jones" class="img-fluid">
+                                                <img src="{{ asset('images/PROFIL2.png') }}" alt="Maria Jones" class="img-fluid">
                                             </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3">CEO.</span>
+                                            <h3 class="font-weight-bold">Sofia peters</h3>
+                                            <span class="position d-block mb-3">Client</span>
                                         </div>
                                     </div>
 
@@ -154,17 +154,18 @@
 
                                         <div class="author-info">
                                             <div class="author-pic">
-                                                <img src="{{ asset('images/person-1.png') }}" alt="Maria Jones" class="img-fluid">
+                                                <img src="{{ asset('images/PROFILE3.png') }}" alt="Maria Jones" class="img-fluid">
                                             </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3"> Co-Founder</span>
+                                            <h3 class="font-weight-bold">Dexter Morgan</h3>
+                                            <span class="position d-block mb-3">Client</span>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                         </div> 
-                        <!-- END item -->  
+                        <!-- END item -->
+
                     </div>
 
                 </div>

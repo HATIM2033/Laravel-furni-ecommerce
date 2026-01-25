@@ -98,10 +98,7 @@
                     <img src="{{ asset('images/person-1.jpg') }}" alt="Image" class="img-fluid mb-4">
                     <h3>John Smith</h3>
                     <p class="position">CEO & Founder</p>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <ul class="list-unstyled social">
-                        <p class="mb-0"><a href="#" class="more dark">Learn More <span class="icon-arrow_forward"></span></a></p>
-                    </ul>
+                    <p>The visionary behind Furni, dedicated to redefining modern living spaces. With a passion for design and quality, he leads the team to ensure every customer finds their perfect home match.</p>
                 </div>
             </div> 
             <!-- End Column 1 -->
@@ -112,10 +109,7 @@
                     <img src="{{ asset('images/person_2.jpg') }}" alt="Image" class="img-fluid mb-4">
                     <h3>Jane Doe</h3>
                     <p class="position">Product Designer</p>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <ul class="list-unstyled social">
-                       <p class="mb-0"><a href="#" class="more dark">Learn More <span class="icon-arrow_forward"></span></a></p>
-                    </ul>
+                    <p>The creative mind responsible for our sleek aesthetics. She blends functionality with modern art, carefully selecting materials to create furniture that is as durable as it is beautiful</p>
                 </div>
             </div> 
             <!-- End Column 2 -->
@@ -126,11 +120,8 @@
                     <img src="{{ asset('images/person_3.jpg') }}" alt="Image" class="img-fluid mb-4">
                     <h3>Bob Johnson</h3>
                     <p class="position">Marketing Head</p>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <ul class="list-unstyled social">
-                        <p class="mb-0"><a href="#" class="more dark">Learn More <span class="icon-arrow_forward"></span></a></p>
-                    </ul>
-                </div>
+                    <p>The voice of Furni. He specializes in sharing our story with the world, ensuring that our latest collections and best deals reach every home-decor enthusiast.</p>
+                 </div>
             </div> 
             <!-- End Column 3 -->
 
@@ -140,10 +131,7 @@
                     <img src="{{ asset('images/person_4.jpg') }}" alt="Image" class="img-fluid mb-4">
                     <h3>Alice Williams</h3>
                     <p class="position">Sales Manager</p>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <ul class="list-unstyled social">
-                       <p class="mb-0"><a href="#" class="more dark">Learn More <span class="icon-arrow_forward"></span></a></p>
-                    </ul>
+                    <p>Our bridge between the brand and the customer. He ensures a seamless shopping journey, focusing on building long-term relationships and providing the best value for every client.</p>
                 </div>
             </div> 
             <!-- End Column 4 -->
