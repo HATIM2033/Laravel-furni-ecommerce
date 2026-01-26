@@ -31,6 +31,7 @@ Route::get('/checkout/success/{orderId}', [CheckoutController::class, 'success']
 // User orders routes
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index')->middleware('auth.register');
 Route::get('/orders/{orderNumber}', [OrderController::class, 'show'])->name('orders.show')->middleware('auth.register');
+Route::patch('/orders/{orderNumber}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel')->middleware('auth.register');
 
 // Admin routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {

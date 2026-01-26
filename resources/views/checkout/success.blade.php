@@ -35,6 +35,18 @@
                     <h2 class="mb-3">Thank You For Your Order!</h2>
                     <p class="mb-4">Your order has been placed successfully. We'll send you an email confirmation shortly.</p>
                     
+                    <!-- COD Information -->
+                    @if($order->payment_method === 'cash_on_delivery')
+                    <div class="alert alert-info mb-4">
+                        <h5 class="alert-heading">
+                            <i class="fas fa-money-bill-wave me-2"></i>
+                            Cash on Delivery Payment
+                        </h5>
+                        <p class="mb-2">Please prepare the exact amount of <strong>${{ number_format($order->total_amount, 2) }}</strong> for payment when your order arrives.</p>
+                        <p class="mb-0"><small>You will pay when you receive your order. No additional fees or charges.</small></p>
+                    </div>
+                    @endif
+                    
                     <div class="order-summary mb-4">
                         <h4 class="h5 mb-3">Order Details</h4>
                         <div class="row">
@@ -45,7 +57,15 @@
                             </div>
                             <div class="col-md-6">
                                 <p><strong>Total Amount:</strong> ${{ number_format($order->total_amount, 2) }}</p>
-                                <p><strong>Payment Method:</strong> {{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}</p>
+                                <p><strong>Payment Method:</strong> 
+                                    @if($order->payment_method === 'cash_on_delivery')
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-money-bill-wave me-1"></i>Cash on Delivery
+                                        </span>
+                                    @else
+                                        {{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}
+                                    @endif
+                                </p>
                                 <p><strong>Payment Status:</strong> <span class="badge bg-info">{{ ucfirst($order->payment_status) }}</span></p>
                             </div>
                         </div>
@@ -68,7 +88,7 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ asset('images/' . $item->product_image) }}" alt="{{ $item->product_name }}" style="width: 50px; height: 50px; object-fit: cover;" class="me-3">
+                                                <img src="{{ asset($item->product_image) }}" alt="{{ $item->product_name }}" style="width: 50px; height: 50px; object-fit: cover;" class="me-3">
                                                 {{ $item->product_name }}
                                             </div>
                                         </td>

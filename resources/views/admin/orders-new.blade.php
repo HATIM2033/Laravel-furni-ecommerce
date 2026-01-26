@@ -55,16 +55,51 @@
                             </td>
                             <td><strong>${{ number_format($order->total_amount, 2) }}</strong></td>
                             <td>
-                                <span class="badge-admin badge bg-{{ $order->payment_status === 'paid' ? 'success' : 'warning' }}">
-                                    <i class="fas fa-{{ $order->payment_status === 'paid' ? 'check-circle' : 'clock' }} me-1"></i>
-                                    {{ ucfirst($order->payment_status) }}
-                                </span>
+                                <div class="d-flex flex-column">
+                                    @if($order->status === 'completed')
+                                        <span class="badge-admin badge bg-success mb-1">
+                                            <i class="fas fa-check-circle me-1"></i>Paid (COD)
+                                        </span>
+                                        <small class="text-muted">
+                                            <i class="fas fa-money-bill-wave me-1"></i>Delivered & Paid
+                                        </small>
+                                    @elseif($order->status === 'cancelled')
+                                        <span class="badge-admin badge bg-danger mb-1">
+                                            <i class="fas fa-times-circle me-1"></i>Cancelled
+                                        </span>
+                                        <small class="text-muted">
+                                            <i class="fas fa-ban me-1"></i>No Payment Required
+                                        </small>
+                                    @else
+                                        <span class="badge-admin badge bg-{{ $order->payment_status === 'paid' ? 'success' : 'warning' }} mb-1">
+                                            <i class="fas fa-{{ $order->payment_status === 'paid' ? 'check-circle' : 'clock' }} me-1"></i>
+                                            {{ ucfirst($order->payment_status) }}
+                                        </span>
+                                        <small class="text-muted">
+                                            @if($order->payment_method === 'cash_on_delivery')
+                                                <i class="fas fa-money-bill-wave me-1"></i>COD
+                                            @else
+                                                {{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}
+                                            @endif
+                                        </small>
+                                    @endif
+                                </div>
                             </td>
                             <td>
-                                <span class="badge-admin badge bg-{{ $order->status === 'completed' ? 'success' : ($order->status === 'pending' ? 'warning' : 'info') }}">
-                                    <i class="fas fa-{{ $order->status === 'completed' ? 'check' : ($order->status === 'pending' ? 'clock' : 'truck') }} me-1"></i>
-                                    {{ ucfirst($order->status) }}
-                                </span>
+                                @if($order->status === 'completed')
+                                    <span class="badge-admin badge bg-success">
+                                        <i class="fas fa-check me-1"></i>Completed
+                                    </span>
+                                @elseif($order->status === 'cancelled')
+                                    <span class="badge-admin badge bg-danger">
+                                        <i class="fas fa-times me-1"></i>Cancelled
+                                    </span>
+                                @else
+                                    <span class="badge-admin badge bg-{{ $order->status === 'pending' ? 'warning' : 'info' }}">
+                                        <i class="fas fa-{{ $order->status === 'pending' ? 'clock' : 'truck' }} me-1"></i>
+                                        {{ ucfirst($order->status) }}
+                                    </span>
+                                @endif
                             </td>
                             <td>
                                 <div>{{ $order->created_at->format('M d, Y') }}</div>

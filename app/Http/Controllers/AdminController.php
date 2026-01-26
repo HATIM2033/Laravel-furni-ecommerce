@@ -362,10 +362,38 @@ public function updateProduct(Request $request, Product $product)
             'status' => 'required|in:pending,processing,completed,cancelled',
         ]);
         
+        $oldStatus = $order->status;
         $order->status = $request->status;
+        
+        // If order is being marked as completed, automatically set payment status to paid
+        if ($request->status === 'completed' && $oldStatus !== 'completed') {
+            $order->payment_status = 'paid';
+        }
+        
+        // If order is being marked as cancelled, automatically set payment status to cancelled
+        if ($request->status === 'cancelled' && $oldStatus !== 'cancelled') {
+            $order->payment_status = 'cancelled';
+        }
+        
+        // Prevent changing payment status back to pending if order is completed or cancelled
+        if (($oldStatus === 'completed' || $oldStatus === 'cancelled') && $request->status !== $oldStatus) {
+            $statusType = $oldStatus === 'completed' ? 'completed' : 'cancelled';
+            $message = $oldStatus === 'completed' 
+                ? 'Cannot change status of completed orders. Orders marked as completed are considered delivered and paid.'
+                : 'Cannot change status of cancelled orders. Orders marked as cancelled are considered void and no payment is required.';
+            return redirect()->back()->with('error', $message);
+        }
+        
         $order->save();
         
-        return redirect()->back()->with('success', 'Order status updated successfully!');
+        $message = 'Order status updated successfully!';
+        if ($request->status === 'completed') {
+            $message = 'Order marked as completed! Payment status automatically set to paid (COD).';
+        } elseif ($request->status === 'cancelled') {
+            $message = 'Order cancelled! Payment status automatically set to cancelled - no payment required.';
+        }
+        
+        return redirect()->back()->with('success', $message);
     }
     
     /**

@@ -100,21 +100,11 @@
                         <h3 class="h6 mb-3 mt-4">Payment Method</h3>
                         <div class="form-group">
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="credit_card" name="payment_method" value="credit_card" required>
-                                <label class="form-check-label" for="credit_card">
-                                    Credit Card
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" id="paypal" name="payment_method" value="paypal">
-                                <label class="form-check-label" for="paypal">
-                                    PayPal
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" id="cash_on_delivery" name="payment_method" value="cash_on_delivery">
+                                <input type="radio" class="form-check-input" id="cash_on_delivery" name="payment_method" value="cash_on_delivery" checked required>
                                 <label class="form-check-label" for="cash_on_delivery">
-                                    Cash on Delivery
+                                    <strong>Cash on Delivery (COD)</strong>
+                                    <br>
+                                    <small class="text-muted">Pay when you receive your order. No additional fees.</small>
                                 </label>
                             </div>
                         </div>

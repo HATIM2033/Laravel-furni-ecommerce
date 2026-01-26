@@ -25,6 +25,20 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>{{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                
                 <div class="bg-white p-5 rounded shadow-sm">
                     <!-- Order Header -->
                     <div class="row mb-5">
@@ -34,16 +48,46 @@
                         </div>
                         <div class="col-md-6 text-md-end">
                             <div class="mb-2">
-                                <span class="badge {{ $order->status === 'completed' ? 'bg-success' : ($order->status === 'pending' ? 'bg-warning' : 'bg-info') }} me-2">
-                                    {{ ucfirst($order->status) }}
-                                </span>
-                                <span class="badge {{ $order->payment_status === 'paid' ? 'bg-success' : 'bg-warning' }}">
-                                    {{ ucfirst($order->payment_status) }}
-                                </span>
+                                @if($order->status === 'completed')
+                                    <span class="badge bg-success me-2">
+                                        <i class="fas fa-check-circle me-1"></i>Completed
+                                    </span>
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-money-bill-wave me-1"></i>Paid (COD)
+                                    </span>
+                                @elseif($order->status === 'cancelled')
+                                    <span class="badge bg-danger me-2">
+                                        <i class="fas fa-times-circle me-1"></i>Cancelled
+                                    </span>
+                                    <span class="badge bg-danger">
+                                        <i class="fas fa-times-circle me-1"></i>Cancelled
+                                    </span>
+                                @else
+                                    <span class="badge {{ $order->status === 'pending' ? 'bg-warning' : 'bg-info' }} me-2">
+                                        <i class="fas fa-{{ $order->status === 'pending' ? 'clock' : 'truck' }} me-1"></i>
+                                        {{ ucfirst($order->status) }}
+                                    </span>
+                                    <span class="badge {{ $order->payment_status === 'paid' ? 'bg-success' : 'bg-warning' }}">
+                                        <i class="fas fa-{{ $order->payment_status === 'paid' ? 'check-circle' : 'clock' }} me-1"></i>
+                                        {{ ucfirst($order->payment_status) }}
+                                    </span>
+                                @endif
                             </div>
-                            <a href="{{ route('orders.index') }}" class="btn btn-outline-black btn-sm">
-                                ← Back to Orders
-                            </a>
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="{{ route('orders.index') }}" class="btn btn-outline-black btn-sm">
+                                    ← Back to Orders
+                                </a>
+                                @if(in_array($order->status, ['pending', 'processing']))
+                                    <form action="{{ route('orders.cancel', $order->order_number) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" 
+                                                onclick="return confirm('Are you sure you want to cancel this order? This action cannot be undone and your items will be restocked.')">
+                                            <i class="fas fa-times me-1"></i>Cancel Order
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
                         </div>
                     </div>
 
@@ -66,7 +110,7 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <img src="{{ asset('images/' . $item->product_image) }}" 
+                                                    <img src="{{ asset($item->product_image) }}" 
                                                          alt="{{ $item->product_name }}" 
                                                          style="width: 60px; height: 60px; object-fit: cover;" 
                                                          class="me-3 rounded">
@@ -123,8 +167,30 @@
 
                                 <div class="mb-3">
                                     <p class="mb-1"><strong>Payment Method:</strong></p>
-                                    <p>{{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}</p>
+                                    @if($order->payment_method === 'cash_on_delivery')
+                                        <p><span class="badge bg-success"><i class="fas fa-money-bill-wave me-1"></i>Cash on Delivery</span></p>
+                                    @else
+                                        <p>{{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}</p>
+                                    @endif
                                 </div>
+                                
+                                @if($order->status === 'completed')
+                                <div class="alert alert-success mb-3">
+                                    <h6 class="alert-heading">
+                                        <i class="fas fa-check-circle me-2"></i>Order Completed Successfully!
+                                    </h6>
+                                    <p class="mb-1">Your order has been delivered and paid successfully.</p>
+                                    <p class="mb-0"><small>Thank you for choosing Cash on Delivery payment method.</small></p>
+                                </div>
+                                @elseif($order->status === 'cancelled')
+                                <div class="alert alert-danger mb-3">
+                                    <h6 class="alert-heading">
+                                        <i class="fas fa-times-circle me-2"></i>Order Cancelled
+                                    </h6>
+                                    <p class="mb-1">This order has been cancelled and no payment is required.</p>
+                                    <p class="mb-0"><small>If you have any questions, please contact our support team.</small></p>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>

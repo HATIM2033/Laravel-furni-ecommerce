@@ -75,11 +75,39 @@
                         <td>{{ $order->user->email }}</td>
                     </tr>
                     <tr>
+                        <td><strong>Payment Method:</strong></td>
+                        <td>
+                            @if($order->payment_method === 'cash_on_delivery')
+                                <span class="badge bg-success">
+                                    <i class="fas fa-money-bill-wave me-1"></i>Cash on Delivery
+                                </span>
+                            @else
+                                <span class="badge bg-info">
+                                    {{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}
+                                </span>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
                         <td><strong>Payment Status:</strong></td>
                         <td>
-                            <span class="badge-admin badge bg-{{ $order->payment_status === 'paid' ? 'success' : 'warning' }}">
-                                {{ ucfirst($order->payment_status) }}
-                            </span>
+                            @if($order->status === 'completed')
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check-circle me-1"></i>Paid (Delivered)
+                                </span>
+                                <br>
+                                <small class="text-muted">Order completed - payment received via COD</small>
+                            @elseif($order->status === 'cancelled')
+                                <span class="badge bg-danger">
+                                    <i class="fas fa-times-circle me-1"></i>Cancelled
+                                </span>
+                                <br>
+                                <small class="text-muted">Order cancelled - no payment required</small>
+                            @else
+                                <span class="badge-admin badge bg-{{ $order->payment_status === 'paid' ? 'success' : 'warning' }}">
+                                    {{ ucfirst($order->payment_status) }}
+                                </span>
+                            @endif
                         </td>
                     </tr>
                 </table>

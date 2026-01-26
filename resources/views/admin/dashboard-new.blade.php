@@ -86,9 +86,20 @@
                                     </td>
                                     <td><strong>${{ number_format($order->total_amount, 2) }}</strong></td>
                                     <td>
-                                        <span class="badge-admin badge bg-{{ $order->status === 'completed' ? 'success' : ($order->status === 'pending' ? 'warning' : 'info') }}">
-                                            {{ ucfirst($order->status) }}
-                                        </span>
+                                        @if($order->status === 'completed')
+                                            <span class="badge-admin badge bg-success">
+                                                <i class="fas fa-check me-1"></i>Completed
+                                            </span>
+                                        @elseif($order->status === 'cancelled')
+                                            <span class="badge-admin badge bg-danger">
+                                                <i class="fas fa-times me-1"></i>Cancelled
+                                            </span>
+                                        @else
+                                            <span class="badge-admin badge bg-{{ $order->status === 'pending' ? 'warning' : 'info' }}">
+                                                <i class="fas fa-{{ $order->status === 'pending' ? 'clock' : 'truck' }} me-1"></i>
+                                                {{ ucfirst($order->status) }}
+                                            </span>
+                                        @endif
                                     </td>
                                     <td>{{ $order->created_at->format('M d, Y') }}</td>
                                 </tr>
@@ -177,13 +188,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <a href="#" class="btn btn-admin btn-admin-primary w-100">
-                            <i class="fas fa-plus me-2"></i>Add Product
+                        <a href="{{ route('admin.products') }}" class="btn btn-admin btn-admin-primary w-100">
+                            <i class="fas fa-eye"></i> View Product
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="#" class="btn btn-admin btn-admin-success w-100">
-                            <i class="fas fa-plus me-2"></i>Add Category
+                        <a href="{{ route('admin.categories') }}" class="btn btn-admin btn-admin-success w-100">
+                            <i class="fas fa-tags"></i> View Category
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">

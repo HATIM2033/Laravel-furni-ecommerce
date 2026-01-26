@@ -52,7 +52,7 @@ class CheckoutController extends Controller
             'shipping_address.city' => 'required|string',
             'shipping_address.state' => 'required|string',
             'shipping_address.zip' => 'required|string',
-            'payment_method' => 'required|string',
+            'payment_method' => 'required|string|in:cash_on_delivery',
         ]);
         
         $user = Auth::user();
@@ -76,7 +76,7 @@ class CheckoutController extends Controller
             'discount_amount' => 0,
             'status' => 'pending',
             'payment_status' => 'pending',
-            'payment_method' => $request->payment_method,
+            'payment_method' => 'cash_on_delivery', // Always COD
             'shipping_address' => $request->shipping_address,
             'billing_address' => $request->billing_address ?? $request->shipping_address,
         ]);
