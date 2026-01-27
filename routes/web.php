@@ -81,22 +81,6 @@ Route::get('/contact', function () { return view('pages.contact'); })->name('con
 Route::post('/contact', [ShopController::class, 'contactSubmit'])->name('contact.submit');
 Route::get('/explore', [ShopController::class, 'explore'])->name('explore');
 
-// Test email route (remove in production)
-Route::get('/test-email', function () {
-    try {
-        $message = new \stdClass();
-        $message->full_name = 'Test User';
-        $message->email = 'test@example.com';
-        $message->subject = 'Test Subject';
-        $message->message = 'This is a test message from contact form.';
-        $message->created_at = now();
-        
-        return new \App\Mail\ContactReplyMail($message);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
-})->name('test.email');
-
 // Dashboard route for authenticated users - REMOVED (conflicts with admin dashboard)
 // Admin users use /admin/dashboard, regular users should use home page
 
