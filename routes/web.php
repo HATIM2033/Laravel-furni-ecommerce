@@ -35,7 +35,7 @@ Route::patch('/orders/{orderNumber}/cancel', [OrderController::class, 'cancel'])
 
 // Admin routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboardNew'])->name('dashboard');
     Route::get('/products', [AdminController::class, 'products'])->name('products');
     Route::get('/products/create', [AdminController::class, 'createProduct'])->name('products.create');
     Route::get('/products/{product}', [AdminController::class, 'showProduct'])->name('products.show');
@@ -88,6 +88,7 @@ Route::get('/explore', [ShopController::class, 'explore'])->name('explore');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/edit-new', [ProfileController::class, 'edit'])->name('profile.edit-new');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     

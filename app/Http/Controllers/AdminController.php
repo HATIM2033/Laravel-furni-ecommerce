@@ -31,6 +31,32 @@ class AdminController extends Controller
             ->take(10)
             ->get();
         
+        return view('admin.dashboard', compact(
+            'totalProducts',
+            'totalCategories', 
+            'totalUsers',
+            'totalOrders',
+            'recentOrders'
+        ));
+    }
+
+    /**
+     * Display the new admin dashboard.
+     */
+    public function dashboardNew()
+    {
+        // Get summary statistics
+        $totalProducts = Product::count();
+        $totalCategories = Category::count();
+        $totalUsers = User::count();
+        $totalOrders = Order::count();
+        
+        // Get recent orders with user and items
+        $recentOrders = Order::with('user', 'orderItems')
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get();
+        
         // Get latest users
         $latestUsers = User::orderBy('created_at', 'desc')->take(5)->get();
         
