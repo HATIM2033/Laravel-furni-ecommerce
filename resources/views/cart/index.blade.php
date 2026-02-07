@@ -12,16 +12,11 @@
                     <h1>Cart</h1>
                 </div>
             </div>
-            <div class="col-lg-7">
-                
-            </div>
+            <div class="col-lg-7"></div>
         </div>
     </div>
 </div>
 <!-- End Hero Section -->
-
-<!-- Hidden cart count for JavaScript -->
-<span class="cart-count d-none">{{ array_sum(array_column($cart, 'quantity')) }}</span>
 
 <div class="untree_co-section before-footer-section">
     <div class="container">
@@ -42,28 +37,38 @@
                         </thead>
                         <tbody>
                             @forelse($cart as $id => $item)
-                            <tr>
+                            <tr data-product-id="{{ $id }}">
                                 <td class="product-thumbnail">
                                     <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}" class="img-fluid">
                                 </td>
                                 <td class="product-name">
                                     <h2 class="h5 text-black">{{ $item['name'] }}</h2>
                                 </td>
-                                <td>${{ number_format($item['price'], 2) }}</td>
+                                <td class="product-price-value" data-price="{{ $item['price'] }}">
+                                    ${{ number_format($item['price'], 2) }}
+                                </td>
                                 <td>
                                     <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
                                         <div class="input-group-prepend">
-                                            <button class="btn btn-outline-black decrease" type="button">&minus;</button>
+                                            <button class="btn btn-outline-black decrease" type="button" data-id="{{ $id }}">&minus;</button>
                                         </div>
-                                        <input type="text" class="form-control text-center quantity-amount" value="{{ $item['quantity'] }}" data-id="{{ $id }}" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                        <input type="number" 
+                                               class="form-control text-center quantity-amount" 
+                                               value="{{ $item['quantity'] }}" 
+                                               data-id="{{ $id }}"
+                                               min="1"
+                                               max="99">
                                         <div class="input-group-append">
-                                            <button class="btn btn-outline-black increase" type="button">&plus;</button>
+                                            <button class="btn btn-outline-black increase" type="button" data-id="{{ $id }}">&plus;</button>
                                         </div>
                                     </div>
-
                                 </td>
-                                <td>${{ number_format($item['price'] * $item['quantity'], 2) }}</td>
-                                <td><a href="#" class="btn btn-black btn-sm remove-item" data-id="{{ $id }}">X</a></td>
+                                <td class="product-total-price">
+                                    ${{ number_format($item['price'] * $item['quantity'], 2) }}
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-black btn-sm remove-item" data-id="{{ $id }}">X</a>
+                                </td>
                             </tr>
                             @empty
                             <tr>
@@ -85,7 +90,7 @@
             <div class="col-md-6">
                 <div class="row mb-5">
                     <div class="col-md-6 mb-3 mb-md-0">
-                        <button class="btn btn-black btn-sm btn-block update-cart">Update Cart</button>
+                        <button type="button" class="btn btn-black btn-sm btn-block update-cart">Update Cart</button>
                     </div>
                     <div class="col-md-6">
                         <a href="{{ route('shop.index') }}" class="btn btn-outline-black btn-sm btn-block">Continue Shopping</a>
@@ -100,7 +105,7 @@
                         <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
                     </div>
                     <div class="col-md-4">
-                        <button class="btn btn-black">Apply Coupon</button>
+                        <button type="button" class="btn btn-black">Apply Coupon</button>
                     </div>
                 </div>
             </div>
@@ -117,7 +122,7 @@
                                 <span class="text-black">Subtotal</span>
                             </div>
                             <div class="col-md-6 text-right">
-                                <strong class="text-black">${{ number_format($cartTotal, 2) }}</strong>
+                                <strong class="text-black cart-subtotal">${{ number_format($cartTotal, 2) }}</strong>
                             </div>
                         </div>
                         <div class="row mb-5">
@@ -125,13 +130,15 @@
                                 <span class="text-black">Total</span>
                             </div>
                             <div class="col-md-6 text-right">
-                                <strong class="text-black">${{ number_format($cartTotal, 2) }}</strong>
+                                <strong class="text-black cart-total">${{ number_format($cartTotal, 2) }}</strong>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='{{ route('checkout.index') }}'">Proceed To Checkout</button>
+                                <button type="button" class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='{{ route('checkout.index') }}'">
+                                    Proceed To Checkout
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -146,19 +153,75 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Quantity increase/decrease buttons
-        document.querySelectorAll('.decrease, .increase').forEach(button => {
-            button.addEventListener('click', function() {
-                const input = this.closest('.quantity-container').querySelector('.quantity-amount');
+        // Function to update row total
+        function updateRowTotal(row) {
+            const price = parseFloat(row.querySelector('.product-price-value').dataset.price);
+            const quantity = parseInt(row.querySelector('.quantity-amount').value);
+            const total = price * quantity;
+            row.querySelector('.product-total-price').textContent = '$' + total.toFixed(2);
+            updateCartTotal();
+        }
+
+        // Function to update cart total
+        function updateCartTotal() {
+            let subtotal = 0;
+            document.querySelectorAll('tbody tr[data-product-id]').forEach(row => {
+                const price = parseFloat(row.querySelector('.product-price-value').dataset.price);
+                const quantity = parseInt(row.querySelector('.quantity-amount').value);
+                subtotal += price * quantity;
+            });
+            
+            document.querySelector('.cart-subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.querySelector('.cart-total').textContent = '$' + subtotal.toFixed(2);
+        }
+
+        // Quantity decrease button
+        document.querySelectorAll('.decrease').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const id = this.dataset.id;
+                const input = document.querySelector(`.quantity-amount[data-id="${id}"]`);
                 let value = parseInt(input.value) || 1;
                 
-                if (this.classList.contains('decrease')) {
-                    value = Math.max(1, value - 1);
-                } else {
-                    value++;
-                }
-                
+                value = Math.max(1, value - 1);
                 input.value = value;
+                
+                // Update the row total
+                const row = this.closest('tr');
+                updateRowTotal(row);
+            });
+        });
+
+        // Quantity increase button
+        document.querySelectorAll('.increase').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const id = this.dataset.id;
+                const input = document.querySelector(`.quantity-amount[data-id="${id}"]`);
+                let value = parseInt(input.value) || 1;
+                
+                value++;
+                input.value = value;
+                
+                // Update the row total
+                const row = this.closest('tr');
+                updateRowTotal(row);
+            });
+        });
+
+        // Manual input change
+        document.querySelectorAll('.quantity-amount').forEach(input => {
+            input.addEventListener('change', function() {
+                let value = parseInt(this.value) || 1;
+                value = Math.max(1, value);
+                this.value = value;
+                
+                const row = this.closest('tr');
+                updateRowTotal(row);
             });
         });
 
@@ -168,45 +231,60 @@
                 e.preventDefault();
                 const id = this.dataset.id;
                 
-                fetch('{{ route('cart.remove') }}', {
-                    method: 'DELETE',
+                if (confirm('Are you sure you want to remove this item?')) {
+                    fetch('{{ route('cart.remove') }}', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ id: id })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to remove item');
+                    });
+                }
+            });
+        });
+
+        // Update cart
+        const updateCartBtn = document.querySelector('.update-cart');
+        if (updateCartBtn) {
+            updateCartBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const quantities = {};
+                document.querySelectorAll('.quantity-amount').forEach(input => {
+                    quantities[input.dataset.id] = parseInt(input.value);
+                });
+
+                fetch('{{ route('cart.update') }}', {
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    body: JSON.stringify({ id: id })
+                    body: JSON.stringify(quantities)
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
                         location.reload();
                     }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to update cart');
                 });
             });
-        });
-
-        // Update cart
-        document.querySelector('.update-cart')?.addEventListener('click', function() {
-            const quantities = {};
-            document.querySelectorAll('.quantity-amount').forEach(input => {
-                quantities[input.dataset.id] = input.value;
-            });
-
-            fetch('{{ route('cart.update') }}', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify(quantities)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    location.reload();
-                }
-            });
-        });
+        }
     });
 </script>
 @endpush

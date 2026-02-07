@@ -50,7 +50,7 @@
 									<li><a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a></li>
 									@if(auth()->user()->isAdmin())
 										<li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
-									@endif>
+									@endif
 									<li><hr class="dropdown-divider"></li>
 									<li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
 								</ul>
@@ -73,7 +73,14 @@
 								</ul>
 							</li>
 						@endif
-						<li><a class="nav-link" href="{{ auth()->check() ? route('cart.index') : route('login') }}"><img src="{{ asset('images/cart.svg') }}" title="{{ auth()->check() ? 'Cart' : 'Login to access cart' }}"></a></li>
+						<li><a class="nav-link position-relative" href="{{ auth()->check() ? route('cart.index') : route('login') }}">
+							<img src="{{ asset('images/cart.svg') }}" title="{{ auth()->check() ? 'Cart' : 'Login to access cart' }}">
+							@if(auth()->check())
+								<span id="cart-count-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white" style="font-size: 0.6em; min-width: 18px; height: 18px; line-height: 18px; text-align: center; padding: 0 4px;">
+									{{ Illuminate\Support\Facades\Session::get('cart', []) ? array_sum(array_column(Session::get('cart', []), 'quantity')) : 0 }}
+								</span>
+							@endif
+						</a></li>
 					</ul>
 				</div>
 			</div>
@@ -185,11 +192,11 @@
 							</div>
 
 							<div class="col-6 col-sm-6 col-md-3">
-								<ul class="list-unstyled">
-									<li><a href="#">Nordic Chair</a></li>
-									<li><a href="#">Kruzo Aero</a></li>
-									<li><a href="#">Ergonomic Chair</a></li>
-								</ul>
+    							<ul class="list-unstyled">
+					        		<li><a href="{{ route('shop.show', 'nordic-chair') }}">Nordic Chair</a></li>
+					        		<li><a href="{{ route('shop.show', 'kruzo-aero') }}">Kruzo Aero</a></li>
+					        		<li><a href="{{ route('shop.show', 'ergonomic-chair') }}">Ergonomic Chair</a></li>
+    							</ul>
 							</div>
 						</div>
 					</div>
@@ -342,6 +349,46 @@
 						setTimeout(updateCartCount, 100);
 					}
 				});
+			});
+		</script>
+		
+		<script>
+			// Update cart count badge
+			function updateCartCount() {
+				fetch('{{ route('cart.count') }}')
+					.then(response => response.json())
+					.then(data => {
+						const badge = document.getElementById('cart-count-badge');
+						if (badge) {
+							if (data.count > 0) {
+								badge.textContent = data.count;
+								badge.style.display = 'inline-block';
+							} else {
+								badge.style.display = 'none';
+							}
+						}
+					})
+					.catch(error => console.error('Error updating cart count:', error));
+			}
+
+			// Update cart count on page load
+			document.addEventListener('DOMContentLoaded', function() {
+				updateCartCount();
+			});
+
+			// Listen for cart operations
+			document.addEventListener('click', function(e) {
+				const target = e.target;
+						
+				// Check if clicked element is part of cart operation
+				if (target.closest('form[action*="cart.add"]')) {
+					setTimeout(updateCartCount, 100);
+				}
+						
+				// Handle AJAX cart operations
+				if (target.closest('.update-cart') || target.closest('.remove-item')) {
+					setTimeout(updateCartCount, 100);
+				}
 			});
 		</script>
 		

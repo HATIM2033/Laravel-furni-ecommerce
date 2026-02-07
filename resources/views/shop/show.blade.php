@@ -27,7 +27,7 @@
             <!-- Product Images -->
             <div class="col-lg-5 mb-5">
                 <div class="product-image">
-                    <img src="{{ asset( $product->image) }}" alt="{{ $product->name }}" class="img-fluid">
+                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="img-fluid">
                 </div>
             </div>
             
@@ -43,33 +43,34 @@
                     @endif
                 </div>
                 
-                <div class="mb-4">
-                    <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 220px;">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-outline-black decrease" type="button">&minus;</button>
+                @if(auth()->check())
+                    <form action="{{ route('cart.add', $product->id) }}" method="POST" id="add-to-cart-form">
+                        @csrf
+                        <div class="mb-4">
+                            <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 220px;">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-black decrease" type="button">&minus;</button>
+                                </div>
+                                <input type="number" name="quantity" class="form-control text-center quantity-amount" value="1" min="1" max="{{ $product->stock }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-black increase" type="button">&plus;</button>
+                                </div>
+                            </div>
                         </div>
-                        <input type="text" class="form-control text-center quantity-amount" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-black increase" type="button">&plus;</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mb-4">
-                    @if(auth()->check())
-                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="quantity" class="quantity-input" value="1">
+                        
+                        <div class="mb-4">
                             <button type="submit" class="btn btn-black btn-lg py-3 btn-block">
                                 Add To Cart
                             </button>
-                        </form>
-                    @else
+                        </div>
+                    </form>
+                @else
+                    <div class="mb-4">
                         <a href="{{ route('login') }}" class="btn btn-black btn-lg py-3 btn-block">
                             Login to Add to Cart
                         </a>
-                    @endif
-                </div>
+                    </div>
+                @endif
                 
                 <div class="mb-4">
                     <p><strong>Category:</strong> <a href="{{ route('shop.index', ['category' => $product->category->slug]) }}">{{ $product->category->name }}</a></p>
@@ -99,7 +100,7 @@
             @foreach($relatedProducts as $relatedProduct)
             <div class="col-12 col-md-4 col-lg-3 mb-5">
                 <a class="product-item" href="{{ route('shop.show', $relatedProduct->slug) }}">
-                    <img src="{{ asset( $relatedProduct->image) }}" class="img-fluid product-thumbnail">
+                    <img src="{{ asset($relatedProduct->image) }}" class="img-fluid product-thumbnail">
                     <h3 class="product-title">{{ $relatedProduct->name }}</h3>
                     <strong class="product-price">{{ $relatedProduct->formatted_price }}</strong>
                     <span class="icon-cross">
@@ -118,22 +119,28 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Quantity increase/decrease buttons
-        document.querySelectorAll('.decrease, .increase').forEach(button => {
-            button.addEventListener('click', function() {
-                const input = this.closest('.quantity-container').querySelector('.quantity-amount');
-                const hiddenInput = document.querySelector('.quantity-input');
-                let value = parseInt(input.value) || 1;
-                
-                if (this.classList.contains('decrease')) {
-                    value = Math.max(1, value - 1);
-                } else {
-                    value++;
-                }
-                
-                input.value = value;
-                hiddenInput.value = value;
-            });
+        const quantityInput = document.querySelector('.quantity-amount');
+        const maxStock = {{ $product->stock }};
+        
+        // Quantity decrease button
+        document.querySelector('.decrease')?.addEventListener('click', function() {
+            let value = parseInt(quantityInput.value) || 1;
+            value = Math.max(1, value - 1);
+            quantityInput.value = value;
+        });
+        
+        // Quantity increase button
+        document.querySelector('.increase')?.addEventListener('click', function() {
+            let value = parseInt(quantityInput.value) || 1;
+            value = Math.min(maxStock, value + 1);
+            quantityInput.value = value;
+        });
+        
+        // Validate input manually
+        quantityInput?.addEventListener('change', function() {
+            let value = parseInt(this.value) || 1;
+            value = Math.max(1, Math.min(maxStock, value));
+            this.value = value;
         });
     });
 </script>

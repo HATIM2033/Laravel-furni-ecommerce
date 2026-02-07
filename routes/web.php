@@ -22,6 +22,7 @@ Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add')-
 Route::put('/cart/update', [CartController::class, 'update'])->name('cart.update')->middleware('auth.register');
 Route::delete('/cart/remove', [CartController::class, 'remove'])->name('cart.remove')->middleware('auth.register');
 Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear')->middleware('auth.register');
+Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count')->middleware('auth.register');
 
 // Checkout routes
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index')->middleware('auth.register');
