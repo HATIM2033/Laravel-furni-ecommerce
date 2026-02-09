@@ -194,7 +194,7 @@
 							<div class="col-6 col-sm-6 col-md-3">
     							<ul class="list-unstyled">
 					        		<li><a href="{{ route('shop.show', 'nordic-chair') }}">Nordic Chair</a></li>
-					        		<li><a href="{{ route('shop.show', 'kruzo-aero') }}">Kruzo Aero</a></li>
+					        		<li><a href="{{ route('shop.show', 'kruzo-aero-chair') }}">Kruzo Aero Chair</a></li>
 					        		<li><a href="{{ route('shop.show', 'ergonomic-chair') }}">Ergonomic Chair</a></li>
     							</ul>
 							</div>
