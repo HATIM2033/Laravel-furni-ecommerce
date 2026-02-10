@@ -198,12 +198,12 @@
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="{{ route('admin.users') }}" class="btn btn-admin btn-admin-info w-100">
+                        <a href="{{ route('admin.users') }}" class="btn btn-admin btn-admin-success w-100" style="background-color: #ff0000ff;">
                             <i class="fas fa-users me-2"></i>Manage Users
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="{{ route('admin.orders') }}" class="btn btn-admin btn-admin-warning w-100">
+                        <a href="{{ route('admin.orders') }}" class="btn btn-admin btn-admin-success w-100" style="background-color: #ffe600ff;">
                             <i class="fas fa-shopping-cart me-2"></i>View Orders
                         </a>
                     </div>

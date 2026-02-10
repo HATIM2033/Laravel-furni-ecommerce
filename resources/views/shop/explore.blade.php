@@ -317,7 +317,7 @@
     }
     
     .hero {
-        background: linear-gradient(135deg, #125801ff 0%);
+        background: linear-gradient(135deg, #38702aff 0%);
         color: white;
         padding: 100px 0;
         margin-bottom: 80px;
