@@ -161,41 +161,110 @@
         /* Stats Cards */
         .stat-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 25px;
             box-shadow: var(--card-shadow);
             border-left: 4px solid #3498db;
             margin-bottom: 25px;
-            transition: transform 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .stat-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
-        .stat-card.primary { border-left-color: #3498db; }
-        .stat-card.success { border-left-color: #27ae60; }
-        .stat-card.warning { border-left-color: #f39c12; }
-        .stat-card.danger { border-left-color: #e74c3c; }
-        .stat-card.info { border-left-color: #17a2b8; }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.1) 50%);
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+
+        .stat-card.primary { 
+            border-left-color: #3498db; 
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+        }
+        .stat-card.success { 
+            border-left-color: #27ae60; 
+            background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+        }
+        .stat-card.warning { 
+            border-left-color: #f39c12; 
+            background: linear-gradient(135deg, #ffffff 0%, #fffdf0 100%);
+        }
+        .stat-card.danger { 
+            border-left-color: #e74c3c; 
+            background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
+        }
+        .stat-card.info { 
+            border-left-color: #17a2b8; 
+            background: linear-gradient(135deg, #ffffff 0%, #f0fcff 100%);
+        }
 
         .stat-card .stat-icon {
             font-size: 2.5rem;
             margin-bottom: 15px;
-            opacity: 0.8;
+            opacity: 0.9;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
 
-        .stat-card.primary .stat-icon { color: #3498db; }
-        .stat-card.success .stat-icon { color: #27ae60; }
-        .stat-card.warning .stat-icon { color: #f39c12; }
-        .stat-card.danger .stat-icon { color: #e74c3c; }
-        .stat-card.info .stat-icon { color: #17a2b8; }
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        .stat-card.primary .stat-icon { 
+            color: #3498db; 
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+        .stat-card.success .stat-icon { 
+            color: #27ae60; 
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+        }
+        .stat-card.warning .stat-icon { 
+            color: #f39c12; 
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+        }
+        .stat-card.danger .stat-icon { 
+            color: #e74c3c; 
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+        .stat-card.info .stat-icon { 
+            color: #17a2b8; 
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+        }
 
         .stat-card .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 2.25rem;
+            font-weight: 700;
             color: #2c3e50;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .stat-card .stat-label {
@@ -203,6 +272,73 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .stat-card .stat-change .trend-up {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .stat-card .stat-change .trend-down {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        /* Financial Section Headers */
+        .financial-section {
+            margin-bottom: 25px;
+        }
+
+        .financial-section h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .financial-section h4 i {
+            font-size: 1.5rem;
+        }
+
+        /* Enhanced Money Display */
+        .money-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .money-value::before {
+            content: '$';
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-right: 2px;
+        }
+
+        /* Pulse Animation for Revenue Cards */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .stat-card.revenue-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .stat-card.revenue-pulse:hover {
+            animation: none;
         }
 
         /* Tables */

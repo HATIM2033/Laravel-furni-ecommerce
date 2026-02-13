@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-    <!-- Stats Cards -->
+    <!-- Original Stats Cards -->
     <div class="col-lg-3 col-md-6">
         <div class="stat-card primary">
             <div class="stat-icon">
@@ -42,6 +42,141 @@
             </div>
             <div class="stat-value">{{ $totalOrders }}</div>
             <div class="stat-label">Total Orders</div>
+        </div>
+    </div>
+</div>
+
+<!-- Financial Stats Cards -->
+<div class="financial-section">
+    <div class="row">
+        <div class="col-12">
+            <h4>
+                <i class="fas fa-chart-line text-success"></i>
+                Financial Overview
+            </h4>
+        </div>
+        
+        <!-- Total Revenue Card -->
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card success revenue-pulse">
+                <div class="stat-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="stat-value money-value">{{ number_format($totalRevenue, 2) }}</div>
+                <div class="stat-label">Total Revenue</div>
+                <div class="stat-change">
+                    <small class="text-muted">All completed orders</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Today's Revenue Card -->
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card info">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="stat-value money-value">{{ number_format($todayRevenue, 2) }}</div>
+                <div class="stat-label">Today's Revenue</div>
+                <div class="stat-change">
+                    @if($todayRevenue > 0)
+                        <span class="trend-up">
+                            <i class="fas fa-arrow-up"></i> Live
+                        </span>
+                    @else
+                        <span class="text-muted">
+                            <i class="fas fa-minus"></i> No sales yet
+                        </span>
+                    @endif
+                    <small class="text-muted">Completed today</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Monthly Revenue Card -->
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card primary">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stat-value money-value">{{ number_format($monthlyRevenue, 2) }}</div>
+                <div class="stat-label">Monthly Revenue</div>
+                <div class="stat-change">
+                    <small class="text-muted">{{ now()->format('F') }} {{ now()->year }}</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Average Order Value Card -->
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card warning">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-value money-value">{{ number_format($averageOrderValue, 2) }}</div>
+                <div class="stat-label">Avg Order Value</div>
+                <div class="stat-change">
+                    <small class="text-muted">Per completed order</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pending Revenue Cards -->
+<div class="financial-section">
+    <div class="row">
+        <div class="col-12">
+            <h4>
+                <i class="fas fa-hourglass-half text-warning"></i>
+                Pending Revenue
+            </h4>
+        </div>
+        
+        <!-- Pending Revenue Card -->
+        <div class="col-lg-6 col-md-6">
+            <div class="stat-card warning">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value money-value">{{ number_format($pendingRevenue, 2) }}</div>
+                <div class="stat-label">Pending Orders</div>
+                <div class="stat-change">
+                    @if($pendingRevenue > 0)
+                        <span class="trend-up">
+                            <i class="fas fa-exclamation-triangle"></i> Action needed
+                        </span>
+                    @else
+                        <span class="text-muted">
+                            <i class="fas fa-check-circle"></i> All clear
+                        </span>
+                    @endif
+                    <small class="text-muted">Awaiting confirmation</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Processing Revenue Card -->
+        <div class="col-lg-6 col-md-6">
+            <div class="stat-card info">
+                <div class="stat-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="stat-value money-value">{{ number_format($processingRevenue, 2) }}</div>
+                <div class="stat-label">Processing Orders</div>
+                <div class="stat-change">
+                    @if($processingRevenue > 0)
+                        <span class="text-info">
+                            <i class="fas fa-spinner fa-spin"></i> In progress
+                        </span>
+                    @else
+                        <span class="text-muted">
+                            <i class="fas fa-check-circle"></i> No active orders
+                        </span>
+                    @endif
+                    <small class="text-muted">Currently being processed</small>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -51,6 +51,17 @@ class AdminController extends Controller
         $totalUsers = User::count();
         $totalOrders = Order::count();
         
+        // Get financial statistics
+        $totalRevenue = Order::where('status', 'completed')->sum('total_amount');
+        $pendingRevenue = Order::where('status', 'pending')->sum('total_amount');
+        $processingRevenue = Order::where('status', 'processing')->sum('total_amount');
+        $todayRevenue = Order::whereDate('created_at', today())->where('status', 'completed')->sum('total_amount');
+        $monthlyRevenue = Order::whereMonth('created_at', now()->month)
+                              ->whereYear('created_at', now()->year)
+                              ->where('status', 'completed')
+                              ->sum('total_amount');
+        $averageOrderValue = Order::where('status', 'completed')->avg('total_amount');
+        
         // Get recent orders with user and items
         $recentOrders = Order::with('user', 'orderItems')
             ->orderBy('created_at', 'desc')
@@ -68,6 +79,12 @@ class AdminController extends Controller
             'totalCategories', 
             'totalUsers',
             'totalOrders',
+            'totalRevenue',
+            'pendingRevenue',
+            'processingRevenue',
+            'todayRevenue',
+            'monthlyRevenue',
+            'averageOrderValue',
             'recentOrders',
             'latestUsers',
             'latestProducts'

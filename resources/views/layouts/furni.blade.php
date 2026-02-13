@@ -35,7 +35,7 @@
 						<li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
 						<li class="nav-item {{ request()->routeIs('shop.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('shop.index') }}">Shop</a></li>
 						<li class="nav-item {{ request()->routeIs('about') ? 'active' : '' }}"><a class="nav-link" href="{{ route('about') }}">About us</a></li>
-						<li class="nav-item {{ request()->routeIs('services') ? 'active' : '' }}"><a class="nav-link" href="{{ route('services') }}">Services</a></li>
+						<li class="nav-item {{ request()->routeIs('explore') ? 'active' : '' }}"><a class="nav-link" href="{{ route('explore') }}">Explore</a></li>
 						<li class="nav-item {{ request()->routeIs('blog') ? 'active' : '' }}"><a class="nav-link" href="{{ route('blog') }}">Blog</a></li>
 						<li class="nav-item {{ request()->routeIs('contact') ? 'active' : '' }}"><a class="nav-link" href="{{ route('contact') }}">Contact us</a></li>	
 					</ul>
@@ -168,7 +168,7 @@
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
 									<li><a href="{{ route('about') }}">About us</a></li>
-									<li><a href="{{ route('services') }}">Services</a></li>
+									<li><a href="{{ route('explore') }}">Explore</a></li>
 									<li><a href="{{ route('blog') }}">Blog</a></li>
 									<li><a href="{{ route('contact') }}">Contact us</a></li>
 								</ul>
